@@ -1,7 +1,7 @@
 # Bienvenido a Corkscrew
 ======================
 
-**NOTA:** Este es fork es para preservar el proyecto original, es una herramienta que usamos en OrangeBox como pentest para labs de seguridad. 
+**NOTA:** Este es fork es para preservar el proyecto original, es una herramienta que usamos en www.orangebox.cl como pentest para labs de seguridad. 
 
 ## Introducción
 
