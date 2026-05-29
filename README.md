@@ -1,54 +1,56 @@
-Welcome to Corkscrew
-====================
+# Bienvenido a Corkscrew
+======================
 
-## Introduction
+**NOTA:** Este es fork es para preservar el proyecto original, es una herramienta que usamos en OrangeBox como pentest para labs de seguridad. 
 
-Corkscrew is a tool for tunneling SSH through HTTP proxies, but... you might
-find another use for it.
+## Introducción
 
-Corkscrew has been compiled on:
+Corkscrew es una herramienta para tunelizar SSH a través de proxies HTTP, pero... puedes
+encontrarle otros usos.
+
+Corkscrew ha sido compilado en:
 
 - HPUX
 - Solaris
 - FreeBSD
 - OpenBSD
 - Linux
-- Win32 (with Cygwin)
+- Win32 (con Cygwin)
 
-Corkscrew has been tested with the following HTTP proxies:
+Corkscrew ha sido probado con los siguientes proxies HTTP:
 
 - Gauntlet
 - CacheFlow
 - JunkBuster
 - Apache mod_proxy
 
-Please open a pull request if you get it working on other proxies or compile
-it elsewhere.
+Por favor abre un pull request si logras hacerlo funcionar en otros proxies o compilarlo
+en otras plataformas.
 
 
-## Where Do I Get It?
+## ¿Dónde lo consigo?
 
-Corkscrew's primary distribution site was
+El sitio principal de distribución de Corkscrew era
 [agroman.net/corkscrew](https://web.archive.org/web/20170510154150/http://agroman.net/corkscrew/),
-however it seems that the site went down and this repository is here to keep
-the code available. The new location is then
+sin embargo el sitio parece haber caído y este repositorio existe para mantener
+el código disponible. La nueva ubicación es entonces
 [github.com/bryanpkc/corkscrew](https://github.com/bryanpkc/corkscrew).
 
 
-## How Do I Install It?
+## ¿Cómo lo instalo?
 
-First you need to install development tools:
+Primero necesitas instalar herramientas de desarrollo:
 
 ```bash
-# For Debian-based distributions (Ubuntu, ElementaryOS, ...)
+# Para distribuciones basadas en Debian (Ubuntu, ElementaryOS, ...)
 sudo apt install build-essential
 
-# For Red-Hat-based distributions (CentOS, Fedora, ...)
+# Para distribuciones basadas en Red Hat (CentOS, Fedora, ...)
 sudo yum groupinstall 'Development tools'
 ```
 
-You need to clone the repo and then you need to go into the `corkscrew` source
-directory and run
+Debes clonar el repositorio y luego entrar al directorio fuente de `corkscrew`
+y ejecutar:
 
 ```bash
 autoreconf --install
@@ -57,74 +59,68 @@ make
 sudo make install
 ```
 
-This will compile `corkscrew` and copy it into `/usr/local/bin/corkscrew`.
+Esto compilará `corkscrew` y lo copiará en `/usr/local/bin/corkscrew`.
 
-If you want to go more in depth about the configuration, please have a look at
-the [INSTALL](./INSTALL) file which gives general information about the build
-system.
+Si quieres profundizar en la configuración, revisa el archivo [INSTALL](./INSTALL)
+que contiene información general sobre el sistema de compilación.
 
 
-## How Is It Used?
+## ¿Cómo se usa?
 
-Setting up Corkscrew with SSH/OpenSSH is very simple. Adding
-the following line to your `~/.ssh/config` file will usually do
-the trick (replace `proxy.example.com` and `8080` with correct values):
+Configurar Corkscrew con SSH/OpenSSH es muy simple. Agregar la siguiente línea
+a tu archivo `~/.ssh/config` normalmente es suficiente (reemplaza
+`proxy.example.com` y `8080` con los valores correctos):
 
 ```text
 ProxyCommand /usr/local/bin/corkscrew proxy.example.com 8080 %h %p
 ```
 
-**NOTE**: Command line syntax has changed since version 1.5. Please
-notice that the proxy port is NOT optional anymore and is required
-in the command line.
+**NOTA**: La sintaxis de la línea de comandos cambió desde la versión 1.5.
+Ten en cuenta que el puerto del proxy YA NO es opcional y es obligatorio en la línea de comando.
 
 
-## How Do I Use The HTTP Authentication Feature?
+## ¿Cómo uso la autenticación HTTP?
 
-You will need to create a file that contains your usename and password
-in the form of:
+Necesitarás crear un archivo que contenga tu usuario y contraseña en el formato:
 
 ```text
 username:password
 ```
 
-I suggest you place this file in your `~/.ssh` directory.
+Se recomienda guardar este archivo en tu directorio `~/.ssh`.
 
-After creating this file you will need to ensure that the proper perms
-are set so nobody else can get your username and password by reading
-this file. So do this:
+Después de crearlo debes asegurarte de que los permisos sean correctos para que nadie
+pueda leerlo:
 
 ```text
 chmod 600 myauth
 ```
 
-Now you will have to change the `ProxyCommand` line in your `~/.ssh/config`
-file. Here's an example:
+Ahora debes modificar la línea `ProxyCommand` en tu archivo `~/.ssh/config`.
+Ejemplo:
 
 ```text
 ProxyCommand /usr/local/bin/corkscrew proxy.work.com 80 %h %p ~/.ssh/myauth
 ```
 
-The proxy authentication feature is very new and has not been tested
-extensively so your mileage may vary. If you encounter any problems
-when trying to use this feature please email me. It would be helpful
-if you could include the following information:
+La funcionalidad de autenticación HTTP es muy nueva y no ha sido probada
+extensamente, por lo que el comportamiento puede variar. Si encuentras problemas
+al usarla, por favor envía un correo. Sería útil incluir:
 
-- Proxy version (ie. Gauntlet Proxy, Microsoft Proxy Server, etc)
-- Operating system you are trying to run corkscrew on
-- Command line syntax you are using
-- Any error messages that are visible to you
+- Versión del proxy (ej: Gauntlet Proxy, Microsoft Proxy Server, etc)
+- Sistema operativo donde estás ejecutando corkscrew
+- Sintaxis del comando que estás usando
+- Cualquier mensaje de error visible
 
-**NOTE**: I have had problems using the auth features with Mircosoft Proxy
-server. The problems are sporadic, and I believe that they are related
-to the round-robin setup that I was testing it again. Your mileage may
-vary.
+**NOTA**: Se han reportado problemas con la autenticación en Microsoft Proxy Server.
+Los problemas son intermitentes y probablemente relacionados con configuraciones
+de balanceo de carga. El comportamiento puede variar.
 
 
-## Who Contributed?
+## ¿Quién contribuyó?
 
-The main author is Pat Padgett. But none of the contact info left work anymore,
-so a name is all we have.
+El autor principal es Pat Padgett. Pero la información de contacto ya no funciona,
+así que solo queda el nombre.
 
-Bryan Chan created this repository and tweaked the code a little bit. Then
-Rémy Sanchez improved the documentation.
+Bryan Chan creó este repositorio y ajustó ligeramente el código. Luego
+Rémy Sanchez mejoró la documentación.
